@@ -18,6 +18,25 @@ int linear_search(int A[], int key, int len) {
 	return i;
 }
 
+int binary_search_iterative(int A[], int key, int len) {
+	int low = 0;
+	int high = len - 1;
+	int mid;
+
+	while (low <= high) {
+		mid = low + ((high - low) / 2);
+
+		if (A[mid] == key)
+			return mid;
+
+		if (key < A[mid])
+			high = mid - 1;
+		else
+			low = mid + 1;
+	}
+	return -1;
+}
+
 /* Helper fucntion for binary_search_recursive */
 static int
 binary_search_rec(int A[], int key, size_t low, size_t high) {
