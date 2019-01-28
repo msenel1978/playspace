@@ -1,24 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "stack.h"
+#include "tree.h"
 
-struct tree_node {
-	int data;
-	struct tree_node *left;
-	struct tree_node *right;
-};
-
-typedef struct tree_node tree_node_t;
-
-/* Init Node of a Tree */
-tree_node_t *new_node(int new_data) {
-	tree_node_t *node = (tree_node_t *)malloc(sizeof(tree_node_t));
-
-	node->data = new_data;
-	node->left = NULL;
-	node->right = NULL;
-
-	return node;
-}
 
 /* Print the content of the array, that stores visited paths */
 void print_visited_path(int path[], int pathlen) {
