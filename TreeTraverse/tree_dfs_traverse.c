@@ -34,10 +34,32 @@ void print_paths(tree_node_t *node, int path[], int len) {
 	}
 }
 
+/* Via recursion, visit all nodes	*/
+/* Store the values to print later	*/ 	
+void print_paths_stack(tree_node_t *node, new_stack_t *path) {
+
+	if (node == NULL)
+		return;
+
+	/* Store nodes until the leaves are reached */
+	push_stack(node->data, path);
+
+	if (node->left==NULL && node->right==NULL) {
+		/* TODO: Do I need to pop? */
+		print_stack(path);
+	}
+	else {
+		print_paths_stack(node->left, path);
+		print_paths_stack(node->right, path);
+	}
+}
+
+
 
 int main()
 {
 	int path[1000];
+	new_stack_t *path_stack = malloc(sizeof(new_stack_t));
 
 	tree_node_t *root = new_node(5);
 
@@ -50,6 +72,7 @@ int main()
 	printf("\n");
 
 	print_paths(root, path, 0);
+	print_paths_stack(root, path_stack);
 	printf("\n");
 
 

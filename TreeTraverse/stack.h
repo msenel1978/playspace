@@ -23,12 +23,13 @@ struct stack {
     elem_t *top;
 };
 
-typedef struct stack stack_t;
+typedef struct stack new_stack_t;
 
-int init_stack(stack_t *stk);
-stack_t *push(stact_t *node, data new_data);
-stack_t *pop(stack_t stk, data *new_data);
-void print_stack(stack_t *head);
-int empty_stack(stack_t *stk);
-
+void init_stack(new_stack_t *stk);
+void push_stack(data new_data, new_stack_t *stk);
+data pop_stack(new_stack_t *stk);
+data top_stack(new_stack_t *stk);
+void print_stack(new_stack_t *stk);
+int empty_stack(const new_stack_t *stk);
+int full_stack(const new_stack_t *stk);
 #endif
