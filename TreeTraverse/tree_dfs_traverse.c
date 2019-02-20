@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "stack.h"
+#include "queue.h"
 #include "tree.h"
 
 
@@ -9,7 +9,7 @@ void print_visited_path(int path[], int pathlen) {
 	int i;
 
 	for (i = 0; i < pathlen; i++)
-		printf("%d ", path[i]);
+		printf("%d\t", path[i]);
 
 	printf("\n");
 
@@ -19,14 +19,16 @@ void print_visited_path(int path[], int pathlen) {
 /* Store the values to print later	*/ 	
 void print_paths(tree_node_t *node, int path[], int len) {
 
-	if (node == NULL)
+	/* Tree empty */
+	if (!node) {
 		return;
+	}
 
 	/* Store nodes until the leaves are reached */
 	path[len] = node->data;
 	len++;
 
-	if (node->left==NULL && node->right==NULL)
+	if ((node->left == NULL) && (node->right == NULL))
 		print_visited_path(path, len);
 	else {
 		print_paths(node->left, path, len);
@@ -34,23 +36,36 @@ void print_paths(tree_node_t *node, int path[], int len) {
 	}
 }
 
-/* Via recursion, visit all nodes	*/
-/* Store the values to print later	*/ 	
-void print_paths_stack(tree_node_t *node, new_stack_t *path) {
+/* Via recursion, visit all nodes			*/
+/* Store the values to print later			*/
+/* This implementation is based on stacks	*/
+void print_paths_queue(tree_node_t *node, queue_t *path, int len) {
+	int i;
+	q_element_t *print_element;
 
-	if (node == NULL)
+	/* Tree empty */
+	if (!node) {
 		return;
+	}
 
 	/* Store nodes until the leaves are reached */
-	push_stack(node->data, path);
+	enqueue(node->data, path);
+	len++;
 
-	if (node->left==NULL && node->right==NULL) {
-		/* TODO: Do I need to pop? */
-		print_stack(path);
+	if ((node->left == NULL) && (node->right == NULL)) {
+		print_element = path->front;
+		for (i = 0; i < len; i++) {
+			printf("%d\t", print_element->d);
+			print_element = print_element->next;		
+		}
+		//printf("%d\t", dequeue_rear(path));
+		printf("\n");
 	}
 	else {
-		print_paths_stack(node->left, path);
-		print_paths_stack(node->right, path);
+		print_paths_queue(node->left, path, len);
+		//printf("%d\t", dequeue_rear(path));
+		print_paths_queue(node->right, path, len);
+		//printf("%d\t", dequeue_rear(path));
 	}
 }
 
@@ -59,7 +74,7 @@ void print_paths_stack(tree_node_t *node, new_stack_t *path) {
 int main()
 {
 	int path[1000];
-	new_stack_t *path_stack = malloc(sizeof(new_stack_t));
+	queue_t *path_queue = malloc(sizeof(queue_t));
 
 	tree_node_t *root = new_node(5);
 
@@ -69,10 +84,13 @@ int main()
 	root->left->right = new_node(3);
 	root->right->right = new_node (2);
 
-	printf("\n");
-
+	printf("\nArray Implementation\n");
 	print_paths(root, path, 0);
-	print_paths_stack(root, path_stack);
+
+	/* Queue Implementation */
+	printf("\nQueue Implementation\n");
+	initialize_queue(path_queue);
+	print_paths_queue(root, path_queue, 0);
 	printf("\n");
 
 
