@@ -53,6 +53,7 @@ void replace_element_queue(queue_t *q, int indx, data d) {
 		return;
 	}
 
+	/* Go through the queue elements */
 	for (i = 1; i <=indx; i++ )
 		replace_element = replace_element->next;
 

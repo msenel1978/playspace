@@ -49,6 +49,8 @@ void print_paths_queue(tree_node_t *node, queue_t *path, int len) {
 	}
 
 	/* Store nodes until the leaves are reached */
+	/* If len < q_cnt due to recursion,
+	   the data at the end needs to be replaced */
 	if (len < path->cnt)
 		replace_element_queue(path, len, node->data);
 	else
