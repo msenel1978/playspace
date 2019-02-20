@@ -20,7 +20,8 @@ void initialize_queue(queue_t *q);
 void enqueue(data d, queue_t *q);
 data dequeue(queue_t *q);
 //data dequeue_rear(queue_t *q);
-data front(const queue_t *q);
+data queue_front(const queue_t *q);
 int is_empty_queue(const queue_t *q);
 int is_full_queue(const queue_t *q);
+void replace_element_queue(queue_t *q, int indx, data d);
 #endif

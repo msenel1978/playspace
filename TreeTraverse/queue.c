@@ -43,31 +43,24 @@ data dequeue(queue_t *q) {
 	return d;
 }
 
-/*data dequeue_rear(queue_t *q) {
+/* indx starts with 1 */
+void replace_element_queue(queue_t *q, int indx, data d) {
+	q_element_t *replace_element = q->front;
 	int i;
-	data d;
-	q_element_t *return_element;
-	q_element_t *previous_element;
 
-	if (is_empty_queue(q))
-		return (-1);
+	if (indx > q->cnt) {
+		printf("Invalid indx\n");
+		return;
+	}
 
-	d = q->rear->d;
+	for (i = 1; i <=indx; i++ )
+		replace_element = replace_element->next;
 
-	return_element = q->rear;
-	previous_element = q->front;
+	replace_element->d = d;
 
-	for (i = 0; i < q->cnt-1; i++)
-		previous_element = previous_element->next;
+}
 
-	q->rear = previous_element;
-	if (q->cnt > 1)
-		free(return_element);
-
-	return(d);
-}*/
-
-data front(const queue_t *q) {
+data queue_front(const queue_t *q) {
 	return (q->front->d);
 }
 

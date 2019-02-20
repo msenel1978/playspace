@@ -49,7 +49,10 @@ void print_paths_queue(tree_node_t *node, queue_t *path, int len) {
 	}
 
 	/* Store nodes until the leaves are reached */
-	enqueue(node->data, path);
+	if (len < path->cnt)
+		replace_element_queue(path, len, node->data);
+	else
+		enqueue(node->data, path);
 	len++;
 
 	if ((node->left == NULL) && (node->right == NULL)) {
@@ -58,14 +61,11 @@ void print_paths_queue(tree_node_t *node, queue_t *path, int len) {
 			printf("%d\t", print_element->d);
 			print_element = print_element->next;		
 		}
-		//printf("%d\t", dequeue_rear(path));
 		printf("\n");
 	}
 	else {
 		print_paths_queue(node->left, path, len);
-		//printf("%d\t", dequeue_rear(path));
 		print_paths_queue(node->right, path, len);
-		//printf("%d\t", dequeue_rear(path));
 	}
 }
 
